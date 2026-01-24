@@ -1,10 +1,13 @@
 import { useQueries } from '@tanstack/react-query';
-import { useFavorites } from '@/entities/place';
+import type { SavedPlace } from '@/entities/place/model/types';
 import { fetchWeatherSummary } from '@/entities/weather';
 import { FavoriteCard } from './FavoriteCard';
 
-export const FavoritesGrid = () => {
-  const { favorites } = useFavorites();
+type Props = {
+  favorites: SavedPlace[];
+};
+
+export const FavoritesGrid = ({ favorites }: Props) => {
   const queries = useQueries({
     queries: favorites.map((place) => ({
       queryKey: ['weather-summary', place.id],
@@ -17,7 +20,7 @@ export const FavoritesGrid = () => {
   }
 
   return (
-    <section className="space-y-3">
+    <section className="py-4 space-y-3">
       <h2 className="text-lg font-semibold">즐겨찾기 목록</h2>
       <div className="grid gap-4 md:grid-cols-2">
         {favorites.map((place, index) => {

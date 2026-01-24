@@ -26,15 +26,15 @@ export const WeatherView = ({ coords }: Props) => {
   if (isError) {
     return (
       <StateCard>
-        <p className="font-semibold">해당 장소의 날씨 정보가 제공되지 않습니다.</p>
+        <p >해당 장소의 날씨 정보가 제공되지 않습니다.</p>
       </StateCard>
     );
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <section className="grid gap-4 md:grid-cols-2">
       <CurrentWeatherCard daily={data.daily} current={data.current} />
       <HourlyWeatherCard hourly={data.hourly} />
-    </div>
+    </section>
   );
 };

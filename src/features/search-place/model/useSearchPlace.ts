@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { koreaDistricts } from '@/shared';
+import { koreaDistricts, useDebounce } from '@/shared';
 
 type Props = {
   limit: number;
@@ -11,13 +11,13 @@ export const useSearchPlace = ({ limit }: Props) => {
   // 선택 시 callback
 
   const [input, setInput] = useState('');
-  // const debouncedKeyword = useDebounce(input)
+  const debouncedInput = useDebounce(input, 300);
 
   // 리스트 필터링
   const results = useMemo(() => {
-    if (input.length < 2) return [];
+    if (debouncedInput.length < 2) return [];
 
-    const debouncedKeywords = input.trim().split(' ');
+    const debouncedKeywords = debouncedInput.trim().split(' ');
     const temp: string[] = [];
 
     for (const item of koreaDistricts as string[]) {
@@ -27,7 +27,7 @@ export const useSearchPlace = ({ limit }: Props) => {
       if (temp.length >= limit) break;
     }
     return temp;
-  }, [input, limit]);
+  }, [debouncedInput, limit]);
 
   return { input, setInput, results };
 };

@@ -1,1 +1,1 @@
-export { addFavoriteAction } from './model/addfavorite';
+export { useFavorite } from './model/useFavorite';

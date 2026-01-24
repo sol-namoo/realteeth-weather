@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Realteeth Weather
 
-## Getting Started
+## 프로젝트 실행 방법
 
-First, run the development server:
-
+1) 의존성 설치
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2) 환경 변수 설정
+```bash
+export NEXT_PUBLIC_OPENWEATHER_KEY=YOUR_KEY
+export NEXT_PUBLIC_KAKAO_REST_KEY=YOUR_KEY
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3) 개발 서버 실행
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 구현한 기능
+- 현재 위치 기반 날씨 조회 (현재/최저/최고/시간대)
+- 위치 검색 및 검색 결과 상세 페이지 이동
+- 즐겨찾기 최대 6개 등록/해제 및 별칭 수정
+- 즐겨찾기 카드에서 요약 날씨 병렬 로딩
 
-## Learn More
+## 기술적 의사결정 및 이유
+- Next.js App Router 사용: 라우팅/서버 라우트 구성이 단순하고 API 라우트 분리가 쉬움
+- TanStack Query 사용: 데이터 캐싱/병렬 요청/상태 관리를 일관된 패턴으로 처리
+- 즐겨찾기 요약 API 분리: 카드 렌더에 필요한 최소 데이터만 받아 트래픽 절감
+- UI 공통 컴포넌트 분리: Card/Input/Button/ModalLayout로 반복 UI 스타일 통합
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 사용한 기술 스택
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- TanStack Query
+- Tailwind CSS
+- ESLint / Prettier

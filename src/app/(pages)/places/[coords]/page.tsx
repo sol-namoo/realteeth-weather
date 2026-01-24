@@ -7,14 +7,14 @@ import { notFound, useParams } from 'next/navigation';
 
 import { loadLastPlace } from '@/entities/place/model/lastSearchedPlace';
 import { AppHeaderDetail, WeatherView } from '@/widgets/weather-view';
-import { useFavorites } from '@/entities/place';
+import { useFavorite } from '@/features/manage-favorite';
 import { PlaceCard } from '@/widgets/weather-view/ui/PlaceCard';
 
 export default function DetailPage() {
   const params = useParams<{ coords: string }>();
   const placeId = decodeURIComponent(params.coords);
 
-  const { favorites } = useFavorites();
+  const { favorites, add, remove, update, canAddMore } = useFavorite();
   const favoriteData = favorites.find((place) => place.id === placeId);
   const lastData = !favoriteData ? loadLastPlace() : null;
   const placeData = favoriteData ?? lastData;
@@ -33,6 +33,10 @@ export default function DetailPage() {
         alias={placeData?.alias || ''}
         placeName={placeData?.placeName}
         coords={coords}
+        canAddMore={canAddMore}
+        onAddFavorite={add}
+        onRemoveFavorite={remove}
+        onUpdateFavorite={update}
       />
       <WeatherView coords={coords} />
     </>

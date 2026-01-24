@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Button, Input, ModalLayout } from '@/shared/ui';
-import { addFavorite, canAddMore, removeFavorite } from '@/entities/place';
+import type { SavedPlace } from '@/entities/place/model/types';
 import type { Coords } from '@/entities/place/model/types';
 
 type Props = {
@@ -8,17 +8,29 @@ type Props = {
   placeId: string;
   placeName: string;
   coords: Coords;
+  canAddMore: boolean;
+  onAdd: (place: SavedPlace) => { ok: true } | { ok: false; reason: 'max' | 'duplicate' };
+  onRemove: (id: string) => void;
   onClose: () => void;
 };
 
-export const AddFavoriteModal = ({ mode, placeId, placeName, coords, onClose }: Props) => {
+export const AddFavoriteModal = ({
+  mode,
+  placeId,
+  placeName,
+  coords,
+  canAddMore,
+  onAdd,
+  onRemove,
+  onClose,
+}: Props) => {
   const [aliasInput, setAliasInput] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const canAdd = useMemo(() => canAddMore(), []);
+  const canAdd = canAddMore;
 
   const handleAddFavorite = () => {
     const alias = aliasInput.trim();
-    const result = addFavorite({
+    const result = onAdd({
       id: placeId,
       placeName,
       alias: alias ? alias : undefined,
@@ -39,7 +51,7 @@ export const AddFavoriteModal = ({ mode, placeId, placeName, coords, onClose }: 
   };
 
   const handleRemoveFavorite = () => {
-    removeFavorite(placeId);
+    onRemove(placeId);
     onClose();
   };
 
