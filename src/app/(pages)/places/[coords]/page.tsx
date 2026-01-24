@@ -1,0 +1,39 @@
+'use client';
+import { notFound, useParams } from 'next/navigation';
+
+// 접근 케이스
+// 1. 검색 후 디테일 뷰
+// 2. 즐겨찾기에서 디테일 뷰
+
+import { loadLastPlace } from '@/entities/place/model/lastSearchedPlace';
+import { AppHeaderDetail, WeatherView } from '@/widgets/weather-view';
+import { getFavoriteById } from '@/entities/place/model/favorites';
+import { PlaceCard } from '@/widgets/weather-view/ui/PlaceCard';
+
+export default function DetailPage() {
+  const params = useParams<{ coords: string }>();
+  const placeId = decodeURIComponent(params.coords);
+
+  const favoriteData = getFavoriteById(placeId);
+  const lastData = favoriteData ? null : loadLastPlace();
+  const placeData = favoriteData ?? lastData;
+  const isFavorite = !!favoriteData;
+
+  if (!placeData) {
+    return notFound();
+  }
+  const coords = { lat: Number(placeData.lat), lon: Number(placeData.lon) };
+
+  return (
+    <>
+      <AppHeaderDetail />
+      <PlaceCard
+        isFavorite={isFavorite}
+        alias={placeData?.alias || ''}
+        placeName={placeData?.placeName}
+        coords={coords}
+      />
+      <WeatherView coords={coords} />
+    </>
+  );
+}
