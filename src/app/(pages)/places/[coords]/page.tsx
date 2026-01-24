@@ -7,15 +7,16 @@ import { notFound, useParams } from 'next/navigation';
 
 import { loadLastPlace } from '@/entities/place/model/lastSearchedPlace';
 import { AppHeaderDetail, WeatherView } from '@/widgets/weather-view';
-import { getFavoriteById } from '@/entities/place/model/favorites';
+import { useFavorites } from '@/entities/place';
 import { PlaceCard } from '@/widgets/weather-view/ui/PlaceCard';
 
 export default function DetailPage() {
   const params = useParams<{ coords: string }>();
   const placeId = decodeURIComponent(params.coords);
 
-  const favoriteData = getFavoriteById(placeId);
-  const lastData = favoriteData ? null : loadLastPlace();
+  const { favorites } = useFavorites();
+  const favoriteData = favorites.find((place) => place.id === placeId);
+  const lastData = !favoriteData ? loadLastPlace() : null;
   const placeData = favoriteData ?? lastData;
   const isFavorite = !!favoriteData;
 

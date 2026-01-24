@@ -10,11 +10,16 @@ type Props = {
 
 export const ModalLayout = ({ children, onClose }: Props) => {
   return (
-    <div className="">
-      <div>
-        <button onClick={onClose}>close</button>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-lg rounded-lg bg-white p-4 shadow-lg"
+        onClick={(event) => event.stopPropagation()}
+      >
+        {children}
       </div>
-      {children}
     </div>
   );
 };

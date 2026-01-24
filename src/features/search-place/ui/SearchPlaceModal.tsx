@@ -1,7 +1,7 @@
 // 검색어 매칭 부분 색깔 하이라이트
 import { useEffect, useState } from 'react';
 import { useGetGeocode, useSearchPlace } from '..';
-import { ModalLayout } from '@/shared/ui';
+import { Input, ModalLayout } from '@/shared/ui';
 import { useRouter } from 'next/navigation';
 import { saveLastPlace } from '@/entities/place/model/lastSearchedPlace';
 
@@ -13,7 +13,7 @@ export const SearchPlaceModal = ({ onClose }: Props) => {
   const router = useRouter();
   const [selected, setSelected] = useState<string>('');
   const {
-    isPending,
+    isLoading,
     isSuccess,
     isError,
     data: geoCodeResult,
@@ -40,14 +40,14 @@ export const SearchPlaceModal = ({ onClose }: Props) => {
   return (
     <>
       <ModalLayout onClose={onClose}>
-        <input
+        <Input
           placeholder="지역명을 입력하세요 (2글자 이상)"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
 
         <div>
-          {isPending && <p>선택한 위치의 좌표를 가져오는 중입니다</p>}
+          {isLoading && <p>선택한 위치의 좌표를 가져오는 중입니다</p>}
           {isError && <p>선택한 위치의 좌표를 가져올 수 없습니다. 다른 지역을 선택해주세요.</p>}
           {results && (
             <ul className="max-h-80 overflow-auto border">

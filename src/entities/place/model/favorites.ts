@@ -20,7 +20,6 @@ export const loadFavorites = (): SavedPlace[] => {
 export const saveFavorites = (list: SavedPlace[]) => {
   if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  // window.dispatchEvent(new Event('favorites:changed'));
 };
 
 export const getFavoriteById = (id: string): SavedPlace | undefined => {

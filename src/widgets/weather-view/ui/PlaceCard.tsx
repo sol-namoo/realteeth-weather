@@ -1,6 +1,7 @@
-import { updateFavorite } from '@/entities/place';
+import { useFavorites } from '@/entities/place';
 import { Coords } from '@/entities/place/model/types';
 import { AddFavoriteModal } from '@/features/manage-favorite/ui/AddFavoriteModal';
+import { Button, Input } from '@/shared/ui';
 import { useEffect, useState } from 'react';
 
 type Props = {
@@ -15,6 +16,7 @@ export const PlaceCard = ({ alias, placeName, isFavorite, coords }: Props) => {
   const [mode, setMode] = useState<'add' | 'remove' | null>(null);
   const [isEditingAlias, setIsEditingAlias] = useState(false);
   const [aliasInput, setAliasInput] = useState(alias ?? '');
+  const { update } = useFavorites();
   const placeId = `${coords.lat},${coords.lon}`;
 
   useEffect(() => {
@@ -44,44 +46,47 @@ export const PlaceCard = ({ alias, placeName, isFavorite, coords }: Props) => {
   };
 
   const saveAlias = () => {
-    if (!isFavorite) return;
-    const nextAlias = aliasInput.trim();
-    updateFavorite(placeId, { alias: nextAlias ? nextAlias : undefined });
+    const newAlias = aliasInput.trim();
+    update(placeId, { alias: newAlias ? newAlias : undefined });
     setIsEditingAlias(false);
   };
 
   return (
     <>
-      <div>
-        <div>
+      <div className="rounded-lg border border-gray-200 p-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="order-1 md:order-2">
           {isFavorite ? (
-            <button onClick={() => openModal('remove')}>색칠된 별</button>
+            <Button onClick={() => openModal('remove')}>★ 즐겨찾기 해제</Button>
           ) : (
-            <button onClick={() => openModal('add')}>빈 별</button>
+            <Button onClick={() => openModal('add')}>☆ 즐겨찾기 등록</Button>
           )}
         </div>
-        <div>
+        <div className="order-2 md:order-1">
           {isFavorite && (
             <div>
               {isEditingAlias ? (
-                <div>
-                  <input
+                <div className="flex space-y-2">
+                  <Input
                     placeholder="별칭을 입력하세요"
                     value={aliasInput}
                     onChange={(e) => setAliasInput(e.target.value)}
                   />
-                  <button onClick={saveAlias}>저장</button>
-                  <button onClick={cancelEditAlias}>취소</button>
+                  <div className="flex flex-wrap gap-2">
+                    <Button onClick={saveAlias}>저장</Button>
+                    <Button onClick={cancelEditAlias}>취소</Button>
+                  </div>
                 </div>
               ) : (
-                <div>
-                  {alias && <p>{alias}</p>}
-                  <button onClick={startEditAlias}>이름 변경</button>
+                <div className="flex flex-wrap items-center gap-2">
+                  {alias && <p className="text-lg font-semibold">{alias}</p>}
+                  <Button onClick={startEditAlias}>이름 변경</Button>
                 </div>
               )}
             </div>
           )}
-          <p>{placeName}</p>
+          <p className="text-sm text-gray-500">{placeName}</p>
+        </div>
         </div>
       </div>
 

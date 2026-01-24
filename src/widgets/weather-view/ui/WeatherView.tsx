@@ -4,6 +4,7 @@
 
 import { Coords } from '@/entities/place/model/types';
 import { useGetWeather } from '@/entities/weather';
+import { StateCard } from '@/shared/ui';
 import { CurrentWeatherCard } from './CurrentWeatherCard';
 import { HourlyWeatherCard } from './HourlyWeatherCard';
 
@@ -15,21 +16,25 @@ export const WeatherView = ({ coords }: Props) => {
   const { isPending, isError, data } = useGetWeather(coords);
 
   if (isPending) {
-    return <p>날씨 정보 로딩 중입니다</p>;
+    return (
+      <StateCard>
+        <p>날씨 정보 로딩 중입니다</p>
+      </StateCard>
+    );
   }
 
   if (isError) {
     return (
-      <>
-        <p>해당 장소의 날씨 정보가 제공되지 않습니다.</p>
-      </>
+      <StateCard>
+        <p className="font-semibold">해당 장소의 날씨 정보가 제공되지 않습니다.</p>
+      </StateCard>
     );
   }
 
   return (
-    <>
+    <div className="grid gap-4 md:grid-cols-2">
       <CurrentWeatherCard daily={data.daily} current={data.current} />
       <HourlyWeatherCard hourly={data.hourly} />
-    </>
+    </div>
   );
 };

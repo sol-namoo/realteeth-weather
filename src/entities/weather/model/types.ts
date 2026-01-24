@@ -115,8 +115,20 @@ export type WeatherOneCallApiResponse = {
   // alerts?: WeatherAlert[];
 };
 
+export type WeatherSummary = {
+  currentTemp: number;
+  minTemp: number;
+  maxTemp: number;
+  icon?: string;
+  description?: string;
+};
+
 export type WeatherApiResponse =
   | { ok: true; result: WeatherOneCallApiResponse }
+  | { ok: false; message: string };
+
+export type WeatherSummaryApiResponse =
+  | { ok: true; result: WeatherSummary }
   | { ok: false; message: string };
 
 // lat위치의 위도(소수점) (−90; 90)

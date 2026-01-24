@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ModalLayout } from '@/shared/ui';
+import { Button, Input, ModalLayout } from '@/shared/ui';
 import { addFavorite, canAddMore, removeFavorite } from '@/entities/place';
 import type { Coords } from '@/entities/place/model/types';
 
@@ -46,30 +46,32 @@ export const AddFavoriteModal = ({ mode, placeId, placeName, coords, onClose }: 
   return (
     <ModalLayout onClose={onClose}>
       {mode === 'add' && !canAdd && (
-        <div>
-          <p>즐겨찾기 6개가 저장되어 더 이상 추가할 수 없습니다.</p>
-          <button onClick={onClose}>확인</button>
+        <div className="space-y-4 text-center">
+          <p className="font-semibold">즐겨찾기 6개가 저장되어 더 이상 추가할 수 없습니다.</p>
+          <Button onClick={onClose}>확인</Button>
         </div>
       )}
       {mode === 'add' && canAdd && (
-        <div>
-          <input
+        <div className="space-y-4 text-center">
+          <Input
             placeholder="즐겨찾기 이름을 입력하세요"
             value={aliasInput}
             onChange={(e) => setAliasInput(e.target.value)}
           />
-          {errorMessage && <p>{errorMessage}</p>}
-          <div>
-            <button onClick={handleAddFavorite}>저장</button>
-            <button onClick={onClose}>취소</button>
+          {errorMessage && <p className="font-semibold">{errorMessage}</p>}
+          <div className="flex justify-center gap-2">
+            <Button onClick={handleAddFavorite}>저장</Button>
+            <Button onClick={onClose}>취소</Button>
           </div>
         </div>
       )}
       {mode === 'remove' && (
-        <div>
-          <p>즐겨찾기를 해제하시겠습니까?</p>
-          <button onClick={handleRemoveFavorite}>예</button>
-          <button onClick={onClose}>아니요</button>
+        <div className="space-y-4 text-center">
+          <p className="font-semibold">즐겨찾기를 해제하시겠습니까?</p>
+          <div className="flex justify-center gap-2">
+            <Button onClick={handleRemoveFavorite}>예</Button>
+            <Button onClick={onClose}>아니요</Button>
+          </div>
         </div>
       )}
     </ModalLayout>

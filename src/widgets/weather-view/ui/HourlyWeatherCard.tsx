@@ -1,5 +1,6 @@
 import { HourlyWeather } from '@/entities/weather/model/types';
 import { dtToHour } from '@/widgets/lib/dtToHour';
+import { Card } from '@/shared/ui';
 
 type Props = {
   hourly: HourlyWeather[];
@@ -7,17 +8,17 @@ type Props = {
 
 export const HourlyWeatherCard = ({ hourly }: Props) => {
   return (
-    <div>
+    <Card className="md:max-h-96 md:overflow-y-auto">
       <p>시간대별 기온</p>
       <ul>
         {hourly.map((hour) => {
           return (
             <li key={hour.dt}>
-              {dtToHour(hour.dt)} : {hour.temp}
+              {dtToHour(hour.dt)}시 : {Math.round(hour.temp)}°
             </li>
           );
         })}
       </ul>
-    </div>
+    </Card>
   );
 };
