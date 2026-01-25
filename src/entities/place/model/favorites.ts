@@ -1,5 +1,3 @@
-// 사용자가 저장한 목록(최대 6개, 별칭 수정, 삭제)
-
 import type { SavedPlace } from './types';
 
 const STORAGE_KEY = 'favorites';

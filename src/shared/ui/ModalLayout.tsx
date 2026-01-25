@@ -1,7 +1,4 @@
 'use client';
-// 오버레이
-// 트랩/닫기
-// 레이아웃
 
 type Props = {
   children: React.ReactNode;

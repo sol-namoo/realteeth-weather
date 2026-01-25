@@ -9,9 +9,6 @@ type InitialPlaceState =
   | { status: 'unavailable'; message?: string };
 
 export const useGetInitialPlace = () => {
-  // geolocation 성공하면 해당 좌표로 fetch
-  // 실패하면 localStorage 마지막 위치
-  // 없으면 서울
 
   const [locationState, setLocationState] = useState<InitialPlaceState>({ status: 'idle' });
 

@@ -1,5 +1,3 @@
-// 위치, 현재 기온, 당일의 최저 기온, 당일의 최고 기온
-
 import { CurrentWeather, DailyWeather } from '@/entities/weather/model/types';
 import { Card } from '@/shared/ui';
 
@@ -28,7 +26,7 @@ export const CurrentWeatherCard = ({ current, daily }: Props) => {
       </div>
       <div>
         <p>
-          오늘의 최고 기온: <span>{Math.round(daily[0].temp.min)}°</span>
+          오늘의 최저 기온: <span>{Math.round(daily[0].temp.min)}°</span>
         </p>
       </div>
     </Card>

@@ -16,7 +16,6 @@ export async function GET(req: Request): Promise<NextResponse<GeocodeApiResponse
   const q = searchParams.get('query');
 
   if (!q) {
-    // Todo: ui에서 "query is required" 처리
     return NextResponse.json({ ok: false, message: 'query is required' }, { status: 400 });
   }
 
@@ -38,7 +37,6 @@ export async function GET(req: Request): Promise<NextResponse<GeocodeApiResponse
   const docs = data.documents ?? [];
 
   if (docs.length === 0) {
-    // Todo: "해당 장소의 정보가 제공되지 않습니다" 처리
     return NextResponse.json({ ok: false, message: 'no result' }, { status: 404 });
   }
 

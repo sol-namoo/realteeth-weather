@@ -1,4 +1,3 @@
-// 검색어 매칭 부분 색깔 하이라이트
 import { useEffect, useState } from 'react';
 import { useGetGeocode, useSearchPlace } from '..';
 import { Input, ModalLayout } from '@/shared/ui';

@@ -1,7 +1,5 @@
 'use client';
 
-// 위치 그리고 날씨 정보(현재 기온, 당일의 최저 기온, 당일의 최고 기온, 시간대 별 기온)
-
 import { Coords } from '@/entities/place/model/types';
 import { useGetWeather } from '@/entities/weather';
 import { StateCard } from '@/shared/ui';

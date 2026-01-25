@@ -6,14 +6,10 @@ type Props = {
 };
 
 export const useSearchPlace = ({ limit }: Props) => {
-  // Todo: 디바운스 걸기
-  // Todo: 더보기 (옵셔널)
-  // 선택 시 callback
 
   const [input, setInput] = useState('');
   const debouncedInput = useDebounce(input, 300);
 
-  // 리스트 필터링
   const results = useMemo(() => {
     if (debouncedInput.length < 2) return [];
 
